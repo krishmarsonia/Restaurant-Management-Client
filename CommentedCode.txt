@@ -1,0 +1,270 @@
+modal.js
+import * as React from "react";
+import axios from "axios";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import ProductContext from "../../context/productsContext/productContext";
+import { useUpdateProduct } from "../../hooks/productHooks/productHooks";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+export default function BasicModal(props) {
+  const prodcontext = React.useContext(ProductContext);
+  const [textFieldData, setTextFieldData] = React.useState();
+  const {mutate} = useUpdateProduct();
+  const id = props.id;
+
+  const textHandler = (e) => {
+    setTextFieldData(e.target.value);
+  };
+
+  const saveChangesHandler = async (e) => {
+    // console.log("hey" + prodcontext)
+    const data = {
+      prodId: id, 
+      prodName: textFieldData
+    }
+    mutate(data);
+
+    // await axios
+    //   .post("http://localhost:5050/updateProductName", {
+    //     data: {
+    //       prodId: id,
+    //       prodName: textFieldData,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     const numid = prodcontext.productData.findIndex((o) => o._id === id);
+    //     prodcontext.productData[numid].name = textFieldData;
+    //     const ar = prodcontext.productData;
+    //     prodcontext.statechange(ar);
+    //     console.log(res);
+    //   })
+    //   .catch((err) => console.log(err));
+    props.handleClose();
+  };
+
+  return (
+    <>
+      <Modal
+        open={props.open}
+        onClose={props.handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Name
+          </Typography>
+          <TextField
+            id="outlined-basic"
+            label="Outlined"
+            variant="outlined"
+            defaultValue={props.name}
+            onChange={textHandler}
+          />
+          <br />
+          <br />
+          <br />
+          <br />
+          <Button
+            variant="contained"
+            style={{ marginRight: "20px" }}
+            onClick={saveChangesHandler}
+          >
+            Save changes
+          </Button>
+          <Button color="error" variant="outlined" onClick={props.handleClose}>
+            Cancel
+          </Button>
+        </Box>
+      </Modal>
+    </>
+  );
+}
+
+AddModel
+import * as React from "react";
+import axios from "axios";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { TextField } from "@mui/material";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import ProductContext from "../../context/productsContext/productContext";
+import { useAddProduct } from "../../hooks/productHooks/productHooks";
+
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+export default function BasicAddModal(props) {
+  const prodcontext = React.useContext(ProductContext);
+  const [textNameData, setTextNameData] = React.useState();
+
+  const {mutate} = useAddProduct()
+
+  const textHandler = (e) => {
+    setTextNameData(e.target.value);
+  };
+
+  const saveChangesHandler = async (e) => {
+    // console.log("hey" + prodcontext)
+
+    const data = {
+      prodName: textNameData,
+    }
+    mutate(data);
+
+    // await axios
+    //   .post("http://localhost:5050/AddProduct", {
+    //     data: {
+    //       prodName: textNameData,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     // const numid = prodcontext.productData.findIndex((o) => o._id === id);
+    //     // prodcontext.productData[numid].name = textFieldData;
+    //     // const ar = prodcontext.addButton;
+    //     // prodcontext.statechange(ar);
+    //     // console.log(res);
+    //     const addobj = {
+    //         _id: res.data,
+    //         name:textNameData,
+    //         status: true
+    //     }
+    //     prodcontext.addButton(addobj);
+    //   })
+    //   .catch((err) => console.log(err));
+    props.handleClose();
+  };
+
+  return (
+    <>
+      <Modal
+        open={props.open}
+        onClose={props.handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Name
+          </Typography>
+          <TextField
+            id="outlined-basic"
+            label="Outlined"
+            variant="outlined"
+            onChange={textHandler}
+          />
+          <br />
+          <br />
+          <br />
+          <br />
+          <Button
+            variant="contained"
+            style={{ marginRight: "20px" }}
+            onClick={saveChangesHandler}
+          >
+            Save changes
+          </Button>
+          <Button color="error" variant="outlined" onClick={props.handleClose}>
+            Cancel
+          </Button>
+        </Box>
+      </Modal>
+    </>
+  );
+}
+
+deleteclickhandler(tableContent)
+
+// await axios
+    //   .post("http://localhost:5050/deleteProducts", {
+    //     data: {
+    //       prodId: e,
+    //     },
+    //   })
+    //   .then(() => {
+    //     // console.log(arr3);
+    //     prodcurstate.delProd(e);
+    //   })
+    //   .catch((err) => console.log(err));
+
+toggleEDButton(TableContent)
+
+// axios
+    //   .post("http://localhost:5050/updateProductName", { data: { prodId: id } })
+    //   .then((result) => {
+    //     console.log(result);
+    //     prodcurstate.toggleButton(id);
+    //   })
+    //   .catch((err) => console.log(err));
+
+    temp
+    {/* console.log(item);  */}
+        {/* // return (<Accordion
+        //   expanded={expanded === item._id}
+        //   onChange={handleChange(item._id)}
+        // >
+        //   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+        //     <Typography>{item.name}</Typography>
+        //   </AccordionSummary>
+        //   <AccordionDetails>
+        //     <Typography>
+        //       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        //       Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+        //       eget. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        //       Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+        //       eget.
+        //     </Typography>
+        //   </AccordionDetails>
+        // </Accordion>)
+        {/* <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+          <Typography>Collapsible Group Item #2</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+          <Typography>Collapsible Group Item #3</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+            sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+            sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion> */}
